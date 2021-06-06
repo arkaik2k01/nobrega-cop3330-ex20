@@ -36,25 +36,75 @@ Allow the user to also enter the state’s full name in upper, lower, or mixed c
 Implement the program using data structures to avoid nested if statements.
  */
 
-import java.util.Scanner;
 
-public class App
+public class taxCalc
 {
-    static Scanner in = new Scanner(System.in);
+    private int order;
+    private String state;
+    private String county;
 
-    public static void main(String[] args)
+    private final double TAX_WI = 0.05;
+    private final double TAX_EAUCLAIRE = 0.055;
+    private final double TAX_DUNN = 0.054;
+    private final double TAX_IL = 0.08;
+
+    public int getOrder()
     {
-        taxCalc calc = new taxCalc();
+        return order;
+    }
 
-        //Input
-        System.out.print("What is the order amount? ");
-        calc.setOrder(Integer.parseInt(in.nextLine())); //I know this can cause problems, pls ignore I got lazy :(
-        System.out.print("What state do you live in? ");
-        calc.setState(in.nextLine());
-        System.out.print("What county do you live in? ");
-        calc.setCounty(in.nextLine());
+    public void setOrder(int order)
+    {
+        this.order = order;
+    }
 
-        //Output
-        System.out.printf("The tax is $%,.2f.%nThe total is $%,.2f.", calc.returnTax(), calc.returnTotal());
+    public String getState()
+    {
+        return state;
+    }
+
+    public void setState(String state)
+    {
+        this.state = state;
+    }
+
+    public String getCounty()
+    {
+        return county;
+    }
+
+    public void setCounty(String county)
+    {
+        this.county = county;
+    }
+
+    public double returnTax()
+    {
+        if(state.equalsIgnoreCase("wi") || state.equalsIgnoreCase("Wisconsin"))
+        {
+            if(county.equalsIgnoreCase("Eau Claire"))
+            {
+                return order * TAX_EAUCLAIRE;
+            }
+            else if(county.equalsIgnoreCase("Dunn County"))
+            {
+                return order * TAX_DUNN;
+            }
+            else
+            {
+                return order * TAX_WI;
+            }
+        }
+        else if(state.equalsIgnoreCase("il") || state.equalsIgnoreCase("Illinois"))
+        {
+            return order * TAX_IL;
+        }
+
+        return 0;
+    }
+
+    public double returnTotal()
+    {
+        return order + (returnTax());
     }
 }
